@@ -18,6 +18,12 @@
       "fieldValidateRulesPattern": "^[A-Z][a-z]+$"
     },
     {
+      "fieldName": "phone",
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^\\+?[0-9 ]+$"
+    },
+    {
       "fieldName": "avatarUrl",
       "fieldType": "String",
       "fieldValidateRules": ["pattern"],
@@ -25,15 +31,7 @@
     },
     {
       "fieldName": "bio",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "2000"
-    },
-    {
-      "fieldName": "phone",
-      "fieldType": "String",
-      "fieldValidateRules": ["pattern"],
-      "fieldValidateRulesPattern": "^\\+?[0-9 ]+$"
+      "fieldType": "TextBlob"
     }
   ],
   "name": "AppUser",

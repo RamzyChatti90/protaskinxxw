@@ -13,7 +13,8 @@ export interface ITask {
   dueDate?: dayjs.Dayjs | null;
   createdAt?: dayjs.Dayjs | null;
   category?: Pick<ICategory, 'id'> | null;
-  owner?: Pick<IAppUser, 'id'> | null;
+  assignedTo?: Pick<IAppUser, 'id'> | null;
+  createdBy?: Pick<IAppUser, 'id'> | null;
 }
 
 export type NewTask = Omit<ITask, 'id'> & { id: null };

@@ -37,14 +37,26 @@ class TaskTest {
     }
 
     @Test
-    void ownerTest() {
+    void assignedToTest() {
         Task task = getTaskRandomSampleGenerator();
         AppUser appUserBack = getAppUserRandomSampleGenerator();
 
-        task.setOwner(appUserBack);
-        assertThat(task.getOwner()).isEqualTo(appUserBack);
+        task.setAssignedTo(appUserBack);
+        assertThat(task.getAssignedTo()).isEqualTo(appUserBack);
 
-        task.owner(null);
-        assertThat(task.getOwner()).isNull();
+        task.assignedTo(null);
+        assertThat(task.getAssignedTo()).isNull();
+    }
+
+    @Test
+    void createdByTest() {
+        Task task = getTaskRandomSampleGenerator();
+        AppUser appUserBack = getAppUserRandomSampleGenerator();
+
+        task.setCreatedBy(appUserBack);
+        assertThat(task.getCreatedBy()).isEqualTo(appUserBack);
+
+        task.createdBy(null);
+        assertThat(task.getCreatedBy()).isNull();
     }
 }

@@ -38,7 +38,8 @@ type TaskFormGroupContent = {
   dueDate: FormControl<TaskFormRawValue['dueDate']>;
   createdAt: FormControl<TaskFormRawValue['createdAt']>;
   category: FormControl<TaskFormRawValue['category']>;
-  owner: FormControl<TaskFormRawValue['owner']>;
+  assignedTo: FormControl<TaskFormRawValue['assignedTo']>;
+  createdBy: FormControl<TaskFormRawValue['createdBy']>;
 };
 
 export type TaskFormGroup = FormGroup<TaskFormGroupContent>;
@@ -67,7 +68,8 @@ export class TaskFormService {
       dueDate: new FormControl(taskRawValue.dueDate),
       createdAt: new FormControl(taskRawValue.createdAt),
       category: new FormControl(taskRawValue.category),
-      owner: new FormControl(taskRawValue.owner),
+      assignedTo: new FormControl(taskRawValue.assignedTo),
+      createdBy: new FormControl(taskRawValue.createdBy),
     });
   }
 
