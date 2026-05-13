@@ -1,7 +1,6 @@
 package com.example.protaskinxxw.domain;
 
 import static com.example.protaskinxxw.domain.AppUserTestSamples.*;
-import static com.example.protaskinxxw.domain.CategoryTestSamples.*;
 import static com.example.protaskinxxw.domain.TaskTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,38 +24,14 @@ class TaskTest {
     }
 
     @Test
-    void categoryTest() {
-        Task task = getTaskRandomSampleGenerator();
-        Category categoryBack = getCategoryRandomSampleGenerator();
-
-        task.setCategory(categoryBack);
-        assertThat(task.getCategory()).isEqualTo(categoryBack);
-
-        task.category(null);
-        assertThat(task.getCategory()).isNull();
-    }
-
-    @Test
-    void assignedToTest() {
+    void ownerTest() {
         Task task = getTaskRandomSampleGenerator();
         AppUser appUserBack = getAppUserRandomSampleGenerator();
 
-        task.setAssignedTo(appUserBack);
-        assertThat(task.getAssignedTo()).isEqualTo(appUserBack);
+        task.setOwner(appUserBack);
+        assertThat(task.getOwner()).isEqualTo(appUserBack);
 
-        task.assignedTo(null);
-        assertThat(task.getAssignedTo()).isNull();
-    }
-
-    @Test
-    void createdByTest() {
-        Task task = getTaskRandomSampleGenerator();
-        AppUser appUserBack = getAppUserRandomSampleGenerator();
-
-        task.setCreatedBy(appUserBack);
-        assertThat(task.getCreatedBy()).isEqualTo(appUserBack);
-
-        task.createdBy(null);
-        assertThat(task.getCreatedBy()).isNull();
+        task.owner(null);
+        assertThat(task.getOwner()).isNull();
     }
 }
