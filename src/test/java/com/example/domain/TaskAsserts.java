@@ -64,6 +64,8 @@ public class TaskAsserts {
     public static void assertTaskUpdatableRelationshipsEquals(Task expected, Task actual) {
         assertThat(actual)
             .as("Verify Task relationships")
-            .satisfies(a -> assertThat(a.getOwner()).as("check owner").isEqualTo(expected.getOwner()));
+            .satisfies(a -> assertThat(a.getCategory()).as("check category").isEqualTo(expected.getCategory()))
+            .satisfies(a -> assertThat(a.getOwner()).as("check owner").isEqualTo(expected.getOwner()))
+            .satisfies(a -> assertThat(a.getAppUser()).as("check appUser").isEqualTo(expected.getAppUser()));
     }
 }

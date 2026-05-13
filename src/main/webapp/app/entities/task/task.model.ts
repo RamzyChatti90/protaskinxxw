@@ -1,4 +1,5 @@
 import dayjs from 'dayjs/esm';
+import { ICategory } from 'app/entities/category/category.model';
 import { IAppUser } from 'app/entities/app-user/app-user.model';
 import { Priority } from 'app/entities/enumerations/priority.model';
 import { Status } from 'app/entities/enumerations/status.model';
@@ -11,7 +12,9 @@ export interface ITask {
   status?: keyof typeof Status | null;
   dueDate?: dayjs.Dayjs | null;
   createdAt?: dayjs.Dayjs | null;
+  category?: Pick<ICategory, 'id'> | null;
   owner?: Pick<IAppUser, 'id'> | null;
+  appUser?: Pick<IAppUser, 'id'> | null;
 }
 
 export type NewTask = Omit<ITask, 'id'> & { id: null };

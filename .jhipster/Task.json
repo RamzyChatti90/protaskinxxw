@@ -19,12 +19,12 @@
     {
       "fieldName": "priority",
       "fieldType": "Priority",
-      "fieldValues": "LOW,MEDIUM,HIGH,URGENT"
+      "fieldValues": "LOW,MEDIUM,HIGH"
     },
     {
       "fieldName": "status",
       "fieldType": "Status",
-      "fieldValues": "TODO,IN_PROGRESS,DONE,BLOCKED"
+      "fieldValues": "TODO,IN_PROGRESS,DONE"
     },
     {
       "fieldName": "dueDate",
@@ -38,6 +38,12 @@
   "name": "Task",
   "pagination": "pagination",
   "relationships": [
+    {
+      "otherEntityName": "category",
+      "relationshipName": "category",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
     {
       "otherEntityName": "appUser",
       "relationshipName": "owner",

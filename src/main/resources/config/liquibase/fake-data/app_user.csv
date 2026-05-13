@@ -1,11 +1,11 @@
-id;first_name;last_name;phone;avatar_url;bio
-1;"Ect";"Irme";"82";"http:|K";../fake-data/blob/hipster.txt
-2;"Fe";"Iac";"130";"https:^V";../fake-data/blob/hipster.txt
-3;"Jbfnk";"Bjmwgg";"446117";"https:nu8q";../fake-data/blob/hipster.txt
-4;"Cutween";"Jcdpm";"6";"https:)=qq9";../fake-data/blob/hipster.txt
-5;"Bpvoek";"Tu";"8224";"http:FQ";../fake-data/blob/hipster.txt
-6;"Phy";"Pod";"+26";"http:Qt42Hn";../fake-data/blob/hipster.txt
-7;"Cr";"Xb";"+903131";"https:Wc#D";../fake-data/blob/hipster.txt
-8;"Slialj";"Di";"+60";"https:<md  @";../fake-data/blob/hipster.txt
-9;"Rildolp";"Wqkno";"+   3 ";"https:RR";../fake-data/blob/hipster.txt
-10;"Wekzza";"Jcqttsi";"+47";"http:/.3,N";../fake-data/blob/hipster.txt
+id;first_name;last_name;avatar_url;bio;phone
+1;Antonin;Bertrand;"https:N^M";../fake-data/blob/hipster.txt;"28"
+2;Aude;Fournier;"https:2*/";../fake-data/blob/hipster.txt;"01"
+3;Achille;Bourgeois;"http:n";../fake-data/blob/hipster.txt;"6470"
+4;Arnaud;Guerin;"http:COr76";../fake-data/blob/hipster.txt;"446117"
+5;Tatiana;Remy;"https:q(";../fake-data/blob/hipster.txt;"+89125"
+6;Chrysostome;Bourgeois;"http:NB#\";../fake-data/blob/hipster.txt;"+13992"
+7;Adrehilde;Marchand;"https:0Gh*";../fake-data/blob/hipster.txt;"+582"
+8;Arolde;Da silva;"http:QW5";../fake-data/blob/hipster.txt;"636173"
+9;Armand;Carre;"https:t42H";../fake-data/blob/hipster.txt;"+0"
+10;Lydie;Carre;"http:qu#B,";../fake-data/blob/hipster.txt;"8"

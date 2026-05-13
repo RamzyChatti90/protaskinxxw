@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (sprint(); as sprintRef) {
+      <div>
+        <h2 data-cy="sprintDetailsHeading"><span jhiTranslate="protaskinxxwApp.sprint.detail.title">Sprint</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ sprintRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskinxxwApp.sprint.name">Name</span></dt>
+          <dd>
+            <span>{{ sprintRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskinxxwApp.sprint.description">Description</span></dt>
+          <dd>
+            <span>{{ sprintRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskinxxwApp.sprint.startDate">Start Date</span></dt>
+          <dd>
+            <span>{{ sprintRef.startDate | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskinxxwApp.sprint.createdAt">Created At</span></dt>
+          <dd>
+            <span>{{ sprintRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="protaskinxxwApp.sprint.owner">Owner</span></dt>
+          <dd>
+            @if (sprint()!.owner) {
+              <div>
+                <a [routerLink]="['/app-user', sprint()!.owner?.id, 'view']">{{ sprintRef.owner?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
+        </button>
+
+        <button type="button" [routerLink]="['/sprint', sprintRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editer</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

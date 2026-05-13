@@ -24,11 +24,6 @@
               @if (editForm.get('firstName')?.errors?.required) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
               }
-              @if (editForm.get('firstName')?.errors?.pattern) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'First Name' }"
-                  >Ce champ doit suivre l&apos;expression régulière First Name.</small
-                >
-              }
             </div>
           }
         </div>
@@ -41,26 +36,6 @@
             <div>
               @if (editForm.get('lastName')?.errors?.required) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
-              }
-              @if (editForm.get('lastName')?.errors?.pattern) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Last Name' }"
-                  >Ce champ doit suivre l&apos;expression régulière Last Name.</small
-                >
-              }
-            </div>
-          }
-        </div>
-
-        @let phoneRef = editForm.get('phone')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_phone" jhiTranslate="protaskinxxwApp.appUser.phone">Phone</label>
-          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
-          @if (phoneRef.invalid && (phoneRef.dirty || phoneRef.touched)) {
-            <div>
-              @if (editForm.get('phone')?.errors?.pattern) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Phone' }"
-                  >Ce champ doit suivre l&apos;expression régulière Phone.</small
-                >
               }
             </div>
           }
@@ -84,6 +59,21 @@
         <div class="mb-3">
           <label class="form-label" for="field_bio" jhiTranslate="protaskinxxwApp.appUser.bio">Bio</label>
           <textarea class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio"></textarea>
+        </div>
+
+        @let phoneRef = editForm.get('phone')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_phone" jhiTranslate="protaskinxxwApp.appUser.phone">Phone</label>
+          <input type="text" class="form-control" name="phone" id="field_phone" data-cy="phone" formControlName="phone" />
+          @if (phoneRef.invalid && (phoneRef.dirty || phoneRef.touched)) {
+            <div>
+              @if (editForm.get('phone')?.errors?.pattern) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Phone' }"
+                  >Ce champ doit suivre l&apos;expression régulière Phone.</small
+                >
+              }
+            </div>
+          }
         </div>
 
         <div class="mb-3">

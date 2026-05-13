@@ -20,10 +20,11 @@
       "id": "ID",
       "firstName": "First Name",
       "lastName": "Last Name",
-      "phone": "Phone",
       "avatarUrl": "Avatar Url",
       "bio": "Bio",
-      "internalUser": "Internal User"
+      "phone": "Phone",
+      "internalUser": "Internal User",
+      "tasks": "Tasks"
     }
   }
 }

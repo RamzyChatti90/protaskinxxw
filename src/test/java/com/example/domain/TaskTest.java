@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import static com.example.domain.AppUserTestSamples.*;
+import static com.example.domain.CategoryTestSamples.*;
 import static com.example.domain.TaskTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,6 +25,18 @@ class TaskTest {
     }
 
     @Test
+    void categoryTest() {
+        Task task = getTaskRandomSampleGenerator();
+        Category categoryBack = getCategoryRandomSampleGenerator();
+
+        task.setCategory(categoryBack);
+        assertThat(task.getCategory()).isEqualTo(categoryBack);
+
+        task.category(null);
+        assertThat(task.getCategory()).isNull();
+    }
+
+    @Test
     void ownerTest() {
         Task task = getTaskRandomSampleGenerator();
         AppUser appUserBack = getAppUserRandomSampleGenerator();
@@ -33,5 +46,17 @@ class TaskTest {
 
         task.owner(null);
         assertThat(task.getOwner()).isNull();
+    }
+
+    @Test
+    void appUserTest() {
+        Task task = getTaskRandomSampleGenerator();
+        AppUser appUserBack = getAppUserRandomSampleGenerator();
+
+        task.setAppUser(appUserBack);
+        assertThat(task.getAppUser()).isEqualTo(appUserBack);
+
+        task.appUser(null);
+        assertThat(task.getAppUser()).isNull();
     }
 }

@@ -14,21 +14,19 @@ public class AppUserDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^[A-Z][a-z]+$")
     private String firstName;
 
     @NotNull
-    @Pattern(regexp = "^[A-Z][a-z]+$")
     private String lastName;
-
-    @Pattern(regexp = "^\\+?[0-9 ]+$")
-    private String phone;
 
     @Pattern(regexp = "^https?:.+$")
     private String avatarUrl;
 
     @Lob
     private String bio;
+
+    @Pattern(regexp = "^\\+?[0-9 ]+$")
+    private String phone;
 
     private UserDTO internalUser;
 
@@ -56,14 +54,6 @@ public class AppUserDTO implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -78,6 +68,14 @@ public class AppUserDTO implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public UserDTO getInternalUser() {
@@ -116,9 +114,9 @@ public class AppUserDTO implements Serializable {
             "id=" + getId() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
-            ", phone='" + getPhone() + "'" +
             ", avatarUrl='" + getAvatarUrl() + "'" +
             ", bio='" + getBio() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", internalUser=" + getInternalUser() +
             "}";
     }

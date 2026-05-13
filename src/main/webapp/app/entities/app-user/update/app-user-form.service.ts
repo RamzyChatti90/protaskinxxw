@@ -20,9 +20,9 @@ type AppUserFormGroupContent = {
   id: FormControl<IAppUser['id'] | NewAppUser['id']>;
   firstName: FormControl<IAppUser['firstName']>;
   lastName: FormControl<IAppUser['lastName']>;
-  phone: FormControl<IAppUser['phone']>;
   avatarUrl: FormControl<IAppUser['avatarUrl']>;
   bio: FormControl<IAppUser['bio']>;
+  phone: FormControl<IAppUser['phone']>;
   internalUser: FormControl<IAppUser['internalUser']>;
 };
 
@@ -44,18 +44,18 @@ export class AppUserFormService {
         },
       ),
       firstName: new FormControl(appUserRawValue.firstName, {
-        validators: [Validators.required, Validators.pattern('^[A-Z][a-z]+$')],
+        validators: [Validators.required],
       }),
       lastName: new FormControl(appUserRawValue.lastName, {
-        validators: [Validators.required, Validators.pattern('^[A-Z][a-z]+$')],
-      }),
-      phone: new FormControl(appUserRawValue.phone, {
-        validators: [Validators.pattern('^\\+?[0-9 ]+$')],
+        validators: [Validators.required],
       }),
       avatarUrl: new FormControl(appUserRawValue.avatarUrl, {
         validators: [Validators.pattern('^https?:.+$')],
       }),
       bio: new FormControl(appUserRawValue.bio),
+      phone: new FormControl(appUserRawValue.phone, {
+        validators: [Validators.pattern('^\\+?[0-9 ]+$')],
+      }),
       internalUser: new FormControl(appUserRawValue.internalUser),
     });
   }

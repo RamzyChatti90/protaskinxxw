@@ -16,6 +16,26 @@ const routes: Routes = [
     data: { pageTitle: 'protaskinxxwApp.task.home.title' },
     loadChildren: () => import('./task/task.routes'),
   },
+  {
+    path: 'team',
+    data: { pageTitle: 'protaskinxxwApp.team.home.title' },
+    loadChildren: () => import('./team/team.routes'),
+  },
+  {
+    path: 'sprint',
+    data: { pageTitle: 'protaskinxxwApp.sprint.home.title' },
+    loadChildren: () => import('./sprint/sprint.routes'),
+  },
+  {
+    path: 'notification',
+    data: { pageTitle: 'protaskinxxwApp.notification.home.title' },
+    loadChildren: () => import('./notification/notification.routes'),
+  },
+  {
+    path: 'category',
+    data: { pageTitle: 'protaskinxxwApp.category.home.title' },
+    loadChildren: () => import('./category/category.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

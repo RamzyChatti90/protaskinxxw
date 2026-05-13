@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { ICategory } from 'app/entities/category/category.model';
+import { CategoryService } from 'app/entities/category/service/category.service';
 import { IAppUser } from 'app/entities/app-user/app-user.model';
 import { AppUserService } from 'app/entities/app-user/service/app-user.service';
 import { Priority } from 'app/entities/enumerations/priority.model';
@@ -29,17 +31,21 @@ export class TaskUpdateComponent implements OnInit {
   priorityValues = Object.keys(Priority);
   statusValues = Object.keys(Status);
 
+  categoriesSharedCollection: ICategory[] = [];
   appUsersSharedCollection: IAppUser[] = [];
 
   protected dataUtils = inject(DataUtils);
   protected eventManager = inject(EventManager);
   protected taskService = inject(TaskService);
   protected taskFormService = inject(TaskFormService);
+  protected categoryService = inject(CategoryService);
   protected appUserService = inject(AppUserService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: TaskFormGroup = this.taskFormService.createTaskFormGroup();
+
+  compareCategory = (o1: ICategory | null, o2: ICategory | null): boolean => this.categoryService.compareCategory(o1, o2);
 
   compareAppUser = (o1: IAppUser | null, o2: IAppUser | null): boolean => this.appUserService.compareAppUser(o1, o2);
 
@@ -106,17 +112,34 @@ export class TaskUpdateComponent implements OnInit {
     this.task = task;
     this.taskFormService.resetForm(this.editForm, task);
 
+    this.categoriesSharedCollection = this.categoryService.addCategoryToCollectionIfMissing<ICategory>(
+      this.categoriesSharedCollection,
+      task.category,
+    );
     this.appUsersSharedCollection = this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(
       this.appUsersSharedCollection,
       task.owner,
+      task.appUser,
     );
   }
 
   protected loadRelationshipsOptions(): void {
+    this.categoryService
+      .query()
+      .pipe(map((res: HttpResponse<ICategory[]>) => res.body ?? []))
+      .pipe(
+        map((categories: ICategory[]) => this.categoryService.addCategoryToCollectionIfMissing<ICategory>(categories, this.task?.category)),
+      )
+      .subscribe((categories: ICategory[]) => (this.categoriesSharedCollection = categories));
+
     this.appUserService
       .query()
       .pipe(map((res: HttpResponse<IAppUser[]>) => res.body ?? []))
-      .pipe(map((appUsers: IAppUser[]) => this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(appUsers, this.task?.owner)))
+      .pipe(
+        map((appUsers: IAppUser[]) =>
+          this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(appUsers, this.task?.owner, this.task?.appUser),
+        ),
+      )
       .subscribe((appUsers: IAppUser[]) => (this.appUsersSharedCollection = appUsers));
   }
 }

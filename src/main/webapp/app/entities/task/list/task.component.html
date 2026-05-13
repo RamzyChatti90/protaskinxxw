@@ -82,9 +82,21 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="category.id">
+              <div class="d-flex">
+                <span jhiTranslate="protaskinxxwApp.task.category">Category</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="owner.id">
               <div class="d-flex">
                 <span jhiTranslate="protaskinxxwApp.task.owner">Owner</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="appUser.id">
+              <div class="d-flex">
+                <span jhiTranslate="protaskinxxwApp.task.appUser">App User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -100,17 +112,31 @@
               <td>{{ task.title }}</td>
               <td>{{ task.description }}</td>
               <td [jhiTranslate]="'protaskinxxwApp.Priority.' + (task.priority ?? 'null')">
-                {{ { null: '', LOW: 'LOW', MEDIUM: 'MEDIUM', HIGH: 'HIGH', URGENT: 'URGENT' }[task.priority ?? 'null'] }}
+                {{ { null: '', LOW: 'LOW', MEDIUM: 'MEDIUM', HIGH: 'HIGH' }[task.priority ?? 'null'] }}
               </td>
               <td [jhiTranslate]="'protaskinxxwApp.Status.' + (task.status ?? 'null')">
-                {{ { null: '', TODO: 'TODO', IN_PROGRESS: 'IN_PROGRESS', DONE: 'DONE', BLOCKED: 'BLOCKED' }[task.status ?? 'null'] }}
+                {{ { null: '', TODO: 'TODO', IN_PROGRESS: 'IN_PROGRESS', DONE: 'DONE' }[task.status ?? 'null'] }}
               </td>
               <td>{{ task.dueDate | formatMediumDate }}</td>
               <td>{{ task.createdAt | formatMediumDatetime }}</td>
               <td>
+                @if (task.category) {
+                  <div>
+                    <a [routerLink]="['/category', task.category.id, 'view']">{{ task.category.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
                 @if (task.owner) {
                   <div>
                     <a [routerLink]="['/app-user', task.owner.id, 'view']">{{ task.owner.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (task.appUser) {
+                  <div>
+                    <a [routerLink]="['/app-user', task.appUser.id, 'view']">{{ task.appUser.id }}</a>
                   </div>
                 }
               </td>

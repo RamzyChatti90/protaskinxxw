@@ -10,7 +10,11 @@
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
         "adminAuthority": "Authority",
         "appUser": "App User",
-        "task": "Task"
+        "task": "Task",
+        "team": "Team",
+        "sprint": "Sprint",
+        "notification": "Notification",
+        "category": "Category"
       },
       "account": {
         "main": "Account",

@@ -26,7 +26,9 @@ describe('Task Form Service', () => {
             status: expect.any(Object),
             dueDate: expect.any(Object),
             createdAt: expect.any(Object),
+            category: expect.any(Object),
             owner: expect.any(Object),
+            appUser: expect.any(Object),
           }),
         );
       });
@@ -43,7 +45,9 @@ describe('Task Form Service', () => {
             status: expect.any(Object),
             dueDate: expect.any(Object),
             createdAt: expect.any(Object),
+            category: expect.any(Object),
             owner: expect.any(Object),
+            appUser: expect.any(Object),
           }),
         );
       });

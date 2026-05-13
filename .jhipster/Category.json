@@ -1,0 +1,30 @@
+{
+  "annotations": {
+    "changelogDate": "20260513083545"
+  },
+  "applications": ["protaskinxxw"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "100",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "color",
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^#[0-9a-fA-F]{6}$"
+    },
+    {
+      "fieldName": "icon",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Category",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

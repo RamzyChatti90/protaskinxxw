@@ -49,9 +49,9 @@ public class AppUserAsserts {
             .as("Verify AppUser relevant properties")
             .satisfies(a -> assertThat(a.getFirstName()).as("check firstName").isEqualTo(expected.getFirstName()))
             .satisfies(a -> assertThat(a.getLastName()).as("check lastName").isEqualTo(expected.getLastName()))
-            .satisfies(a -> assertThat(a.getPhone()).as("check phone").isEqualTo(expected.getPhone()))
             .satisfies(a -> assertThat(a.getAvatarUrl()).as("check avatarUrl").isEqualTo(expected.getAvatarUrl()))
-            .satisfies(a -> assertThat(a.getBio()).as("check bio").isEqualTo(expected.getBio()));
+            .satisfies(a -> assertThat(a.getBio()).as("check bio").isEqualTo(expected.getBio()))
+            .satisfies(a -> assertThat(a.getPhone()).as("check phone").isEqualTo(expected.getPhone()));
     }
 
     /**

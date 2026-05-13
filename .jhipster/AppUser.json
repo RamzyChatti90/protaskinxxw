@@ -8,20 +8,12 @@
     {
       "fieldName": "firstName",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "pattern"],
-      "fieldValidateRulesPattern": "^[A-Z][a-z]+$"
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "lastName",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "pattern"],
-      "fieldValidateRulesPattern": "^[A-Z][a-z]+$"
-    },
-    {
-      "fieldName": "phone",
-      "fieldType": "String",
-      "fieldValidateRules": ["pattern"],
-      "fieldValidateRulesPattern": "^\\+?[0-9 ]+$"
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "avatarUrl",
@@ -32,6 +24,12 @@
     {
       "fieldName": "bio",
       "fieldType": "TextBlob"
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^\\+?[0-9 ]+$"
     }
   ],
   "name": "AppUser",
@@ -42,6 +40,12 @@
       "relationshipSide": "left",
       "relationshipType": "one-to-one",
       "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "task",
+      "relationshipName": "tasks",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no",

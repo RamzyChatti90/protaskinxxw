@@ -1,0 +1,10 @@
+{
+  "protaskinxxwApp": {
+    "Type": {
+      "null": "",
+      "INFO": "INFO",
+      "WARNING": "WARNING",
+      "ERROR": "ERROR"
+    }
+  }
+}
