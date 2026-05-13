@@ -66,11 +66,6 @@
           }
         </div>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_bio" jhiTranslate="protaskinxxwApp.appUser.bio">Bio</label>
-          <textarea class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio"></textarea>
-        </div>
-
         @let avatarUrlRef = editForm.get('avatarUrl')!;
         <div class="mb-3">
           <label class="form-label" for="field_avatarUrl" jhiTranslate="protaskinxxwApp.appUser.avatarUrl">Avatar Url</label>
@@ -80,6 +75,21 @@
               @if (editForm.get('avatarUrl')?.errors?.pattern) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Avatar Url' }"
                   >Ce champ doit suivre l&apos;expression régulière Avatar Url.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let bioRef = editForm.get('bio')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_bio" jhiTranslate="protaskinxxwApp.appUser.bio">Bio</label>
+          <input type="text" class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio" />
+          @if (bioRef.invalid && (bioRef.dirty || bioRef.touched)) {
+            <div>
+              @if (editForm.get('bio')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >Ce champ doit faire moins de 2000 caractères.</small
                 >
               }
             </div>

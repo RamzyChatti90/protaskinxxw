@@ -17,16 +17,9 @@
                                  referencedTableName="category"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="assigned_to_id"
+        <addForeignKeyConstraint baseColumnNames="owner_id"
                                  baseTableName="task"
-                                 constraintName="fk_task__assigned_to_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="app_user"
-                                 />
-
-        <addForeignKeyConstraint baseColumnNames="created_by_id"
-                                 baseTableName="task"
-                                 constraintName="fk_task__created_by_id"
+                                 constraintName="fk_task__owner_id"
                                  referencedColumnNames="id"
                                  referencedTableName="app_user"
                                  />

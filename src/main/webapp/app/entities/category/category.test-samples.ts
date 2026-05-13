@@ -9,14 +9,14 @@ export const sampleWithPartialData: ICategory = {
   id: 7001,
   name: 'pin-pon surveiller diablement',
   color: '#f159c0',
-  icon: 'fa-J',
+  icon: 'C',
 };
 
 export const sampleWithFullData: ICategory = {
   id: 28780,
   name: 'plouf',
   color: '#53bde1',
-  icon: 'fa-l@Qxf',
+  icon: 'ZvH7V',
 };
 
 export const sampleWithNewData: NewCategory = {

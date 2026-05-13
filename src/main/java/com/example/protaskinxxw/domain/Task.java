@@ -56,11 +56,7 @@ public class Task implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
-    private AppUser assignedTo;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
-    private AppUser createdBy;
+    private AppUser owner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -168,29 +164,16 @@ public class Task implements Serializable {
         return this;
     }
 
-    public AppUser getAssignedTo() {
-        return this.assignedTo;
+    public AppUser getOwner() {
+        return this.owner;
     }
 
-    public void setAssignedTo(AppUser appUser) {
-        this.assignedTo = appUser;
+    public void setOwner(AppUser appUser) {
+        this.owner = appUser;
     }
 
-    public Task assignedTo(AppUser appUser) {
-        this.setAssignedTo(appUser);
-        return this;
-    }
-
-    public AppUser getCreatedBy() {
-        return this.createdBy;
-    }
-
-    public void setCreatedBy(AppUser appUser) {
-        this.createdBy = appUser;
-    }
-
-    public Task createdBy(AppUser appUser) {
-        this.setCreatedBy(appUser);
+    public Task owner(AppUser appUser) {
+        this.setOwner(appUser);
         return this;
     }
 

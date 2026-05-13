@@ -5,8 +5,8 @@ export interface IAppUser {
   firstName?: string | null;
   lastName?: string | null;
   phone?: string | null;
-  bio?: string | null;
   avatarUrl?: string | null;
+  bio?: string | null;
   internalUser?: Pick<IUser, 'id'> | null;
 }
 

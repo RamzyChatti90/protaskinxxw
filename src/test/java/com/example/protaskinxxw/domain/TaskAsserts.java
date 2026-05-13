@@ -65,7 +65,6 @@ public class TaskAsserts {
         assertThat(actual)
             .as("Verify Task relationships")
             .satisfies(a -> assertThat(a.getCategory()).as("check category").isEqualTo(expected.getCategory()))
-            .satisfies(a -> assertThat(a.getAssignedTo()).as("check assignedTo").isEqualTo(expected.getAssignedTo()))
-            .satisfies(a -> assertThat(a.getCreatedBy()).as("check createdBy").isEqualTo(expected.getCreatedBy()));
+            .satisfies(a -> assertThat(a.getOwner()).as("check owner").isEqualTo(expected.getOwner()));
     }
 }

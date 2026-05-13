@@ -21,8 +21,8 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "phone": "Phone",
-      "bio": "Bio",
       "avatarUrl": "Avatar Url",
+      "bio": "Bio",
       "internalUser": "Internal User"
     }
   }

@@ -47,7 +47,7 @@ export class CategoryFormService {
         validators: [Validators.pattern('^#[0-9a-fA-F]{6}$')],
       }),
       icon: new FormControl(categoryRawValue.icon, {
-        validators: [Validators.pattern('^fa-.+$')],
+        validators: [Validators.pattern('^[a-zA-Z0-9-_]+$')],
       }),
     });
   }

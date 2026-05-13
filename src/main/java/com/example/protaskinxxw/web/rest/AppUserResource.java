@@ -1,8 +1,7 @@
 package com.example.protaskinxxw.web.rest;
 
+import com.example.protaskinxxw.domain.AppUser;
 import com.example.protaskinxxw.repository.AppUserRepository;
-import com.example.protaskinxxw.service.AppUserService;
-import com.example.protaskinxxw.service.dto.AppUserDTO;
 import com.example.protaskinxxw.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -24,6 +24,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/app-users")
+@Transactional
 public class AppUserResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(AppUserResource.class);
@@ -33,54 +34,51 @@ public class AppUserResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final AppUserService appUserService;
-
     private final AppUserRepository appUserRepository;
 
-    public AppUserResource(AppUserService appUserService, AppUserRepository appUserRepository) {
-        this.appUserService = appUserService;
+    public AppUserResource(AppUserRepository appUserRepository) {
         this.appUserRepository = appUserRepository;
     }
 
     /**
      * {@code POST  /app-users} : Create a new appUser.
      *
-     * @param appUserDTO the appUserDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new appUserDTO, or with status {@code 400 (Bad Request)} if the appUser has already an ID.
+     * @param appUser the appUser to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new appUser, or with status {@code 400 (Bad Request)} if the appUser has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<AppUserDTO> createAppUser(@Valid @RequestBody AppUserDTO appUserDTO) throws URISyntaxException {
-        LOG.debug("REST request to save AppUser : {}", appUserDTO);
-        if (appUserDTO.getId() != null) {
+    public ResponseEntity<AppUser> createAppUser(@Valid @RequestBody AppUser appUser) throws URISyntaxException {
+        LOG.debug("REST request to save AppUser : {}", appUser);
+        if (appUser.getId() != null) {
             throw new BadRequestAlertException("A new appUser cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        appUserDTO = appUserService.save(appUserDTO);
-        return ResponseEntity.created(new URI("/api/app-users/" + appUserDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, appUserDTO.getId().toString()))
-            .body(appUserDTO);
+        appUser = appUserRepository.save(appUser);
+        return ResponseEntity.created(new URI("/api/app-users/" + appUser.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, appUser.getId().toString()))
+            .body(appUser);
     }
 
     /**
      * {@code PUT  /app-users/:id} : Updates an existing appUser.
      *
-     * @param id the id of the appUserDTO to save.
-     * @param appUserDTO the appUserDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated appUserDTO,
-     * or with status {@code 400 (Bad Request)} if the appUserDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the appUserDTO couldn't be updated.
+     * @param id the id of the appUser to save.
+     * @param appUser the appUser to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated appUser,
+     * or with status {@code 400 (Bad Request)} if the appUser is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the appUser couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<AppUserDTO> updateAppUser(
+    public ResponseEntity<AppUser> updateAppUser(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody AppUserDTO appUserDTO
+        @Valid @RequestBody AppUser appUser
     ) throws URISyntaxException {
-        LOG.debug("REST request to update AppUser : {}, {}", id, appUserDTO);
-        if (appUserDTO.getId() == null) {
+        LOG.debug("REST request to update AppUser : {}, {}", id, appUser);
+        if (appUser.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, appUserDTO.getId())) {
+        if (!Objects.equals(id, appUser.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -88,33 +86,33 @@ public class AppUserResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        appUserDTO = appUserService.update(appUserDTO);
+        appUser = appUserRepository.save(appUser);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, appUserDTO.getId().toString()))
-            .body(appUserDTO);
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, appUser.getId().toString()))
+            .body(appUser);
     }
 
     /**
      * {@code PATCH  /app-users/:id} : Partial updates given fields of an existing appUser, field will ignore if it is null
      *
-     * @param id the id of the appUserDTO to save.
-     * @param appUserDTO the appUserDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated appUserDTO,
-     * or with status {@code 400 (Bad Request)} if the appUserDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the appUserDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the appUserDTO couldn't be updated.
+     * @param id the id of the appUser to save.
+     * @param appUser the appUser to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated appUser,
+     * or with status {@code 400 (Bad Request)} if the appUser is not valid,
+     * or with status {@code 404 (Not Found)} if the appUser is not found,
+     * or with status {@code 500 (Internal Server Error)} if the appUser couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<AppUserDTO> partialUpdateAppUser(
+    public ResponseEntity<AppUser> partialUpdateAppUser(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody AppUserDTO appUserDTO
+        @NotNull @RequestBody AppUser appUser
     ) throws URISyntaxException {
-        LOG.debug("REST request to partial update AppUser partially : {}, {}", id, appUserDTO);
-        if (appUserDTO.getId() == null) {
+        LOG.debug("REST request to partial update AppUser partially : {}, {}", id, appUser);
+        if (appUser.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, appUserDTO.getId())) {
+        if (!Objects.equals(id, appUser.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -122,11 +120,32 @@ public class AppUserResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<AppUserDTO> result = appUserService.partialUpdate(appUserDTO);
+        Optional<AppUser> result = appUserRepository
+            .findById(appUser.getId())
+            .map(existingAppUser -> {
+                if (appUser.getFirstName() != null) {
+                    existingAppUser.setFirstName(appUser.getFirstName());
+                }
+                if (appUser.getLastName() != null) {
+                    existingAppUser.setLastName(appUser.getLastName());
+                }
+                if (appUser.getPhone() != null) {
+                    existingAppUser.setPhone(appUser.getPhone());
+                }
+                if (appUser.getAvatarUrl() != null) {
+                    existingAppUser.setAvatarUrl(appUser.getAvatarUrl());
+                }
+                if (appUser.getBio() != null) {
+                    existingAppUser.setBio(appUser.getBio());
+                }
+
+                return existingAppUser;
+            })
+            .map(appUserRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, appUserDTO.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, appUser.getId().toString())
         );
     }
 
@@ -136,34 +155,34 @@ public class AppUserResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of appUsers in body.
      */
     @GetMapping("")
-    public List<AppUserDTO> getAllAppUsers() {
+    public List<AppUser> getAllAppUsers() {
         LOG.debug("REST request to get all AppUsers");
-        return appUserService.findAll();
+        return appUserRepository.findAll();
     }
 
     /**
      * {@code GET  /app-users/:id} : get the "id" appUser.
      *
-     * @param id the id of the appUserDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the appUserDTO, or with status {@code 404 (Not Found)}.
+     * @param id the id of the appUser to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the appUser, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<AppUserDTO> getAppUser(@PathVariable("id") Long id) {
+    public ResponseEntity<AppUser> getAppUser(@PathVariable("id") Long id) {
         LOG.debug("REST request to get AppUser : {}", id);
-        Optional<AppUserDTO> appUserDTO = appUserService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(appUserDTO);
+        Optional<AppUser> appUser = appUserRepository.findById(id);
+        return ResponseUtil.wrapOrNotFound(appUser);
     }
 
     /**
      * {@code DELETE  /app-users/:id} : delete the "id" appUser.
      *
-     * @param id the id of the appUserDTO to delete.
+     * @param id the id of the appUser to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAppUser(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete AppUser : {}", id);
-        appUserService.delete(id);
+        appUserRepository.deleteById(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();

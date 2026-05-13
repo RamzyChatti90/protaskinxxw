@@ -75,14 +75,12 @@ describe('Task Management Update Component', () => {
 
     it('should call AppUser query and add missing value', () => {
       const task: ITask = { id: 22244 };
-      const assignedTo: IAppUser = { id: 14418 };
-      task.assignedTo = assignedTo;
-      const createdBy: IAppUser = { id: 14418 };
-      task.createdBy = createdBy;
+      const owner: IAppUser = { id: 14418 };
+      task.owner = owner;
 
       const appUserCollection: IAppUser[] = [{ id: 14418 }];
       jest.spyOn(appUserService, 'query').mockReturnValue(of(new HttpResponse({ body: appUserCollection })));
-      const additionalAppUsers = [assignedTo, createdBy];
+      const additionalAppUsers = [owner];
       const expectedCollection: IAppUser[] = [...additionalAppUsers, ...appUserCollection];
       jest.spyOn(appUserService, 'addAppUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -101,17 +99,14 @@ describe('Task Management Update Component', () => {
       const task: ITask = { id: 22244 };
       const category: ICategory = { id: 6752 };
       task.category = category;
-      const assignedTo: IAppUser = { id: 14418 };
-      task.assignedTo = assignedTo;
-      const createdBy: IAppUser = { id: 14418 };
-      task.createdBy = createdBy;
+      const owner: IAppUser = { id: 14418 };
+      task.owner = owner;
 
       activatedRoute.data = of({ task });
       comp.ngOnInit();
 
       expect(comp.categoriesSharedCollection).toContainEqual(category);
-      expect(comp.appUsersSharedCollection).toContainEqual(assignedTo);
-      expect(comp.appUsersSharedCollection).toContainEqual(createdBy);
+      expect(comp.appUsersSharedCollection).toContainEqual(owner);
       expect(comp.task).toEqual(task);
     });
   });

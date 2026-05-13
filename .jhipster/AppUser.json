@@ -3,7 +3,6 @@
     "changelogDate": "20260513072921"
   },
   "applications": ["protaskinxxw"],
-  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "firstName",
@@ -24,14 +23,16 @@
       "fieldValidateRulesPattern": "^\\+?[0-9 ]+$"
     },
     {
-      "fieldName": "bio",
-      "fieldType": "TextBlob"
-    },
-    {
       "fieldName": "avatarUrl",
       "fieldType": "String",
       "fieldValidateRules": ["pattern"],
       "fieldValidateRulesPattern": "^https?:.+$"
+    },
+    {
+      "fieldName": "bio",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "2000"
     }
   ],
   "name": "AppUser",
@@ -44,6 +45,5 @@
       "relationshipWithBuiltInEntity": true
     }
   ],
-  "searchEngine": "no",
-  "service": "serviceImpl"
+  "searchEngine": "no"
 }

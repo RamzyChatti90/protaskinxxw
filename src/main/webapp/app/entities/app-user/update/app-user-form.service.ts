@@ -21,8 +21,8 @@ type AppUserFormGroupContent = {
   firstName: FormControl<IAppUser['firstName']>;
   lastName: FormControl<IAppUser['lastName']>;
   phone: FormControl<IAppUser['phone']>;
-  bio: FormControl<IAppUser['bio']>;
   avatarUrl: FormControl<IAppUser['avatarUrl']>;
+  bio: FormControl<IAppUser['bio']>;
   internalUser: FormControl<IAppUser['internalUser']>;
 };
 
@@ -52,9 +52,11 @@ export class AppUserFormService {
       phone: new FormControl(appUserRawValue.phone, {
         validators: [Validators.pattern('^\\+?[0-9 ]+$')],
       }),
-      bio: new FormControl(appUserRawValue.bio),
       avatarUrl: new FormControl(appUserRawValue.avatarUrl, {
         validators: [Validators.pattern('^https?:.+$')],
+      }),
+      bio: new FormControl(appUserRawValue.bio, {
+        validators: [Validators.maxLength(2000)],
       }),
       internalUser: new FormControl(appUserRawValue.internalUser),
     });
