@@ -8,53 +8,16 @@ application {
     databaseType sql
     devDatabaseType h2Disk
     prodDatabaseType postgresql
-    packageName com.example
+    packageName com.carnival.protaskinxxw
     serverPort 9000
-    nativeLanguage fr
-    languages [fr, en]
   }
-  entities *
 }
 
-entity AppUser {
-  firstName String required pattern(/^[A-Z][a-z]+$/)
-  lastName String required pattern(/^[A-Z][a-z]+$/)
-  phone String pattern(/^\+?[0-9 ]+$/)
-  avatarUrl String pattern(/^https?:.+$/)
-  bio TextBlob
-}
-
-entity Task {
-  title String required minlength(3) maxlength(100)
-  description TextBlob
-  priority Priority
-  status Status
-  dueDate LocalDate
-  createdAt Instant
-}
-
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-  URGENT
-}
-
-enum Status {
-  TODO
-  IN_PROGRESS
-  DONE
-  BLOCKED
-}
-
-relationship OneToOne {
-  AppUser{internalUser} to User with builtInEntity
-}
-
-relationship ManyToOne {
-  Task{owner} to AppUser
-}
-
-dto * with mapstruct
-service * with serviceImpl
-paginate Task with pagination
+enum Priority { LOW, MEDIUM, HIGH, URGENT }
+enum Status { TODO, IN_PROGRESS, DONE, BLOCKED }
+entity Task {   title String required,   description TextBlob,   priority Priority,   status Status,   dueDate LocalDate,   createdAt Instant }
+entity Category {   name String required,   color String,   icon String }
+entity Comment {   content TextBlob required,   author String,   createdAt Instant }
+entity Notification {   message TextBlob,   type NotifType,   read Boolean,   createdAt Instant }
+enum NotifType {   INFO,   WARNING,   ERROR }
+relationship ManyToOne {   Task{category}
