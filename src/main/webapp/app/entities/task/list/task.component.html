@@ -88,9 +88,15 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="owner.id">
+            <th scope="col" jhiSortBy="assignedTo.id">
               <div class="d-flex">
-                <span jhiTranslate="protaskinxxwApp.task.owner">Owner</span>
+                <span jhiTranslate="protaskinxxwApp.task.assignedTo">Assigned To</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="createdBy.id">
+              <div class="d-flex">
+                <span jhiTranslate="protaskinxxwApp.task.createdBy">Created By</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -106,7 +112,7 @@
               <td>{{ task.title }}</td>
               <td>{{ task.description }}</td>
               <td [jhiTranslate]="'protaskinxxwApp.Priority.' + (task.priority ?? 'null')">
-                {{ { null: '', LOW: 'LOW', MEDIUM: 'MEDIUM', HIGH: 'HIGH', CRITICAL: 'CRITICAL' }[task.priority ?? 'null'] }}
+                {{ { null: '', LOW: 'LOW', MEDIUM: 'MEDIUM', HIGH: 'HIGH' }[task.priority ?? 'null'] }}
               </td>
               <td [jhiTranslate]="'protaskinxxwApp.Status.' + (task.status ?? 'null')">
                 {{ { null: '', TODO: 'TODO', IN_PROGRESS: 'IN_PROGRESS', DONE: 'DONE' }[task.status ?? 'null'] }}
@@ -121,9 +127,16 @@
                 }
               </td>
               <td>
-                @if (task.owner) {
+                @if (task.assignedTo) {
                   <div>
-                    <a [routerLink]="['/app-user', task.owner.id, 'view']">{{ task.owner.id }}</a>
+                    <a [routerLink]="['/app-user', task.assignedTo.id, 'view']">{{ task.assignedTo.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (task.createdBy) {
+                  <div>
+                    <a [routerLink]="['/app-user', task.createdBy.id, 'view']">{{ task.createdBy.id }}</a>
                   </div>
                 }
               </td>

@@ -46,9 +46,7 @@ export class CategoryFormService {
       color: new FormControl(categoryRawValue.color, {
         validators: [Validators.pattern('^#[0-9a-fA-F]{6}$')],
       }),
-      icon: new FormControl(categoryRawValue.icon, {
-        validators: [Validators.pattern('^[a-zA-Z0-9-_]+$')],
-      }),
+      icon: new FormControl(categoryRawValue.icon),
     });
   }
 

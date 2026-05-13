@@ -53,19 +53,9 @@
           }
         </div>
 
-        @let iconRef = editForm.get('icon')!;
         <div class="mb-3">
           <label class="form-label" for="field_icon" jhiTranslate="protaskinxxwApp.category.icon">Icon</label>
           <input type="text" class="form-control" name="icon" id="field_icon" data-cy="icon" formControlName="icon" />
-          @if (iconRef.invalid && (iconRef.dirty || iconRef.touched)) {
-            <div>
-              @if (editForm.get('icon')?.errors?.pattern) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Icon' }"
-                  >Ce champ doit suivre l&apos;expression régulière Icon.</small
-                >
-              }
-            </div>
-          }
         </div>
       </div>
 

@@ -10,17 +10,17 @@ export const sampleWithPartialData: IAppUser = {
   id: 7641,
   firstName: 'Rizywdt',
   lastName: 'Rabxhkr',
-  avatarUrl: 'https:wLM',
-  phone: '+08910',
+  phone: '+ 55',
+  bio: '../fake-data/blob/hipster.txt',
 };
 
 export const sampleWithFullData: IAppUser = {
   id: 1902,
   firstName: 'Dquofe',
   lastName: 'Ktlm',
-  avatarUrl: 'http:D~%',
-  bio: 'insipide',
-  phone: '3174',
+  phone: '4 0',
+  avatarUrl: 'http:SzkI',
+  bio: '../fake-data/blob/hipster.txt',
 };
 
 export const sampleWithNewData: NewAppUser = {
