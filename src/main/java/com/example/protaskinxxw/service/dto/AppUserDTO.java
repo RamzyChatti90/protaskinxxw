@@ -24,11 +24,11 @@ public class AppUserDTO implements Serializable {
     @Pattern(regexp = "^\\+?[0-9 ]+$")
     private String phone;
 
-    @Lob
-    private String bio;
-
     @Pattern(regexp = "^https?:.+$")
     private String avatarUrl;
+
+    @Lob
+    private String bio;
 
     private UserDTO internalUser;
 
@@ -64,20 +64,20 @@ public class AppUserDTO implements Serializable {
         this.phone = phone;
     }
 
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public UserDTO getInternalUser() {
@@ -117,8 +117,8 @@ public class AppUserDTO implements Serializable {
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", phone='" + getPhone() + "'" +
-            ", bio='" + getBio() + "'" +
             ", avatarUrl='" + getAvatarUrl() + "'" +
+            ", bio='" + getBio() + "'" +
             ", internalUser=" + getInternalUser() +
             "}";
     }

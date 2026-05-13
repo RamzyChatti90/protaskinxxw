@@ -3,6 +3,7 @@
     "changelogDate": "20260513083545"
   },
   "applications": ["protaskinxxw"],
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "name",
@@ -19,12 +20,11 @@
     },
     {
       "fieldName": "icon",
-      "fieldType": "String",
-      "fieldValidateRules": ["pattern"],
-      "fieldValidateRulesPattern": "^[a-zA-Z0-9-_]+$"
+      "fieldType": "String"
     }
   ],
   "name": "Category",
   "relationships": [],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

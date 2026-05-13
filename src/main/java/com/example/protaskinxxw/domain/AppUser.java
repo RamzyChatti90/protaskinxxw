@@ -41,8 +41,8 @@ public class AppUser implements Serializable {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
-    @Size(max = 2000)
-    @Column(name = "bio", length = 2000)
+    @Lob
+    @Column(name = "bio")
     private String bio;
 
     @OneToOne(fetch = FetchType.LAZY)

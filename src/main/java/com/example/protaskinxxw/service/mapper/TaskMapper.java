@@ -14,8 +14,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface TaskMapper extends EntityMapper<TaskDTO, Task> {
     @Mapping(target = "category", source = "category", qualifiedByName = "categoryId")
-    @Mapping(target = "assignedTo", source = "assignedTo", qualifiedByName = "appUserId")
-    @Mapping(target = "createdBy", source = "createdBy", qualifiedByName = "appUserId")
+    @Mapping(target = "owner", source = "owner", qualifiedByName = "appUserId")
     TaskDTO toDto(Task s);
 
     @Named("categoryId")

@@ -7,10 +7,13 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AlertError } from 'app/shared/alert/alert-error.model';
+import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
+import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
-import { IAppUser } from '../app-user.model';
 import { AppUserService } from '../service/app-user.service';
+import { IAppUser } from '../app-user.model';
 import { AppUserFormGroup, AppUserFormService } from './app-user-form.service';
 
 @Component({
@@ -24,6 +27,8 @@ export class AppUserUpdateComponent implements OnInit {
 
   usersSharedCollection: IUser[] = [];
 
+  protected dataUtils = inject(DataUtils);
+  protected eventManager = inject(EventManager);
   protected appUserService = inject(AppUserService);
   protected appUserFormService = inject(AppUserFormService);
   protected userService = inject(UserService);
@@ -42,6 +47,21 @@ export class AppUserUpdateComponent implements OnInit {
       }
 
       this.loadRelationshipsOptions();
+    });
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    this.dataUtils.openFile(base64String, contentType);
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
+      error: (err: FileLoadError) =>
+        this.eventManager.broadcast(new EventWithContent<AlertError>('protaskinxxwApp.error', { ...err, key: `error.file.${err.key}` })),
     });
   }
 

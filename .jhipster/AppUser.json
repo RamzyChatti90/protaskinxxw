@@ -3,6 +3,7 @@
     "changelogDate": "20260513072921"
   },
   "applications": ["protaskinxxw"],
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "firstName",
@@ -30,9 +31,7 @@
     },
     {
       "fieldName": "bio",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "2000"
+      "fieldType": "TextBlob"
     }
   ],
   "name": "AppUser",
@@ -45,5 +44,6 @@
       "relationshipWithBuiltInEntity": true
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

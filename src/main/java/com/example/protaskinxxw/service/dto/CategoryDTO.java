@@ -19,7 +19,6 @@ public class CategoryDTO implements Serializable {
     @Pattern(regexp = "^#[0-9a-fA-F]{6}$")
     private String color;
 
-    @Pattern(regexp = "^fa-.+$")
     private String icon;
 
     public Long getId() {

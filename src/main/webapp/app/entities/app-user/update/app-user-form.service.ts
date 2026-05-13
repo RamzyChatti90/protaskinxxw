@@ -55,9 +55,7 @@ export class AppUserFormService {
       avatarUrl: new FormControl(appUserRawValue.avatarUrl, {
         validators: [Validators.pattern('^https?:.+$')],
       }),
-      bio: new FormControl(appUserRawValue.bio, {
-        validators: [Validators.maxLength(2000)],
-      }),
+      bio: new FormControl(appUserRawValue.bio),
       internalUser: new FormControl(appUserRawValue.internalUser),
     });
   }

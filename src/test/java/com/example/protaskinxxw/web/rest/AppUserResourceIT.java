@@ -11,6 +11,8 @@ import com.example.protaskinxxw.IntegrationTest;
 import com.example.protaskinxxw.domain.AppUser;
 import com.example.protaskinxxw.repository.AppUserRepository;
 import com.example.protaskinxxw.repository.UserRepository;
+import com.example.protaskinxxw.service.dto.AppUserDTO;
+import com.example.protaskinxxw.service.mapper.AppUserMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
@@ -62,6 +64,9 @@ class AppUserResourceIT {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AppUserMapper appUserMapper;
 
     @Autowired
     private EntityManager em;
@@ -121,18 +126,20 @@ class AppUserResourceIT {
     void createAppUser() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the AppUser
-        var returnedAppUser = om.readValue(
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
+        var returnedAppUserDTO = om.readValue(
             restAppUserMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUser)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUserDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            AppUser.class
+            AppUserDTO.class
         );
 
         // Validate the AppUser in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedAppUser = appUserMapper.toEntity(returnedAppUserDTO);
         assertAppUserUpdatableFieldsEquals(returnedAppUser, getPersistedAppUser(returnedAppUser));
 
         insertedAppUser = returnedAppUser;
@@ -143,12 +150,13 @@ class AppUserResourceIT {
     void createAppUserWithExistingId() throws Exception {
         // Create the AppUser with an existing ID
         appUser.setId(1L);
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restAppUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUser)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUserDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the AppUser in the database
@@ -163,9 +171,10 @@ class AppUserResourceIT {
         appUser.setFirstName(null);
 
         // Create the AppUser, which fails.
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
 
         restAppUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUser)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUserDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -179,9 +188,10 @@ class AppUserResourceIT {
         appUser.setLastName(null);
 
         // Create the AppUser, which fails.
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
 
         restAppUserMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUser)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUserDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -250,12 +260,11 @@ class AppUserResourceIT {
             .phone(UPDATED_PHONE)
             .avatarUrl(UPDATED_AVATAR_URL)
             .bio(UPDATED_BIO);
+        AppUserDTO appUserDTO = appUserMapper.toDto(updatedAppUser);
 
         restAppUserMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedAppUser.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedAppUser))
+                put(ENTITY_API_URL_ID, appUserDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUserDTO))
             )
             .andExpect(status().isOk());
 
@@ -270,9 +279,14 @@ class AppUserResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         appUser.setId(longCount.incrementAndGet());
 
+        // Create the AppUser
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAppUserMockMvc
-            .perform(put(ENTITY_API_URL_ID, appUser.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUser)))
+            .perform(
+                put(ENTITY_API_URL_ID, appUserDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUserDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the AppUser in the database
@@ -285,12 +299,15 @@ class AppUserResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         appUser.setId(longCount.incrementAndGet());
 
+        // Create the AppUser
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restAppUserMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(appUser))
+                    .content(om.writeValueAsBytes(appUserDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -304,9 +321,12 @@ class AppUserResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         appUser.setId(longCount.incrementAndGet());
 
+        // Create the AppUser
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restAppUserMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUser)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(appUserDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the AppUser in the database
@@ -380,10 +400,15 @@ class AppUserResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         appUser.setId(longCount.incrementAndGet());
 
+        // Create the AppUser
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAppUserMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, appUser.getId()).contentType("application/merge-patch+json").content(om.writeValueAsBytes(appUser))
+                patch(ENTITY_API_URL_ID, appUserDTO.getId())
+                    .contentType("application/merge-patch+json")
+                    .content(om.writeValueAsBytes(appUserDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -397,12 +422,15 @@ class AppUserResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         appUser.setId(longCount.incrementAndGet());
 
+        // Create the AppUser
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restAppUserMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(appUser))
+                    .content(om.writeValueAsBytes(appUserDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -416,9 +444,12 @@ class AppUserResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         appUser.setId(longCount.incrementAndGet());
 
+        // Create the AppUser
+        AppUserDTO appUserDTO = appUserMapper.toDto(appUser);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restAppUserMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(appUser)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(appUserDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the AppUser in the database

@@ -12,8 +12,8 @@ export interface ITask {
   status?: keyof typeof Status | null;
   dueDate?: dayjs.Dayjs | null;
   createdAt?: dayjs.Dayjs | null;
-  category?: ICategory | null;
-  owner?: IAppUser | null;
+  category?: Pick<ICategory, 'id'> | null;
+  owner?: Pick<IAppUser, 'id'> | null;
 }
 
 export type NewTask = Omit<ITask, 'id'> & { id: null };

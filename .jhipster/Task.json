@@ -3,6 +3,7 @@
     "changelogDate": "20260513073021"
   },
   "applications": ["protaskinxxw"],
+  "dto": "mapstruct",
   "fields": [
     {
       "fieldName": "title",
@@ -35,6 +36,7 @@
     }
   ],
   "name": "Task",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityName": "category",
@@ -49,5 +51,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "searchEngine": "no"
+  "searchEngine": "no",
+  "service": "serviceImpl"
 }

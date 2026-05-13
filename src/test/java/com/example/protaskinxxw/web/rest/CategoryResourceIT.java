@@ -10,6 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.example.protaskinxxw.IntegrationTest;
 import com.example.protaskinxxw.domain.Category;
 import com.example.protaskinxxw.repository.CategoryRepository;
+import com.example.protaskinxxw.service.dto.CategoryDTO;
+import com.example.protaskinxxw.service.mapper.CategoryMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
@@ -52,6 +54,9 @@ class CategoryResourceIT {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @Autowired
     private EntityManager em;
@@ -101,18 +106,20 @@ class CategoryResourceIT {
     void createCategory() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Category
-        var returnedCategory = om.readValue(
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
+        var returnedCategoryDTO = om.readValue(
             restCategoryMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(category)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoryDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            Category.class
+            CategoryDTO.class
         );
 
         // Validate the Category in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedCategory = categoryMapper.toEntity(returnedCategoryDTO);
         assertCategoryUpdatableFieldsEquals(returnedCategory, getPersistedCategory(returnedCategory));
 
         insertedCategory = returnedCategory;
@@ -123,12 +130,13 @@ class CategoryResourceIT {
     void createCategoryWithExistingId() throws Exception {
         // Create the Category with an existing ID
         category.setId(1L);
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(category)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoryDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Category in the database
@@ -143,9 +151,10 @@ class CategoryResourceIT {
         category.setName(null);
 
         // Create the Category, which fails.
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
 
         restCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(category)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoryDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -205,12 +214,13 @@ class CategoryResourceIT {
         // Disconnect from session so that the updates on updatedCategory are not directly saved in db
         em.detach(updatedCategory);
         updatedCategory.name(UPDATED_NAME).color(UPDATED_COLOR).icon(UPDATED_ICON);
+        CategoryDTO categoryDTO = categoryMapper.toDto(updatedCategory);
 
         restCategoryMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, updatedCategory.getId())
+                put(ENTITY_API_URL_ID, categoryDTO.getId())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedCategory))
+                    .content(om.writeValueAsBytes(categoryDTO))
             )
             .andExpect(status().isOk());
 
@@ -225,10 +235,15 @@ class CategoryResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         category.setId(longCount.incrementAndGet());
 
+        // Create the Category
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCategoryMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, category.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(category))
+                put(ENTITY_API_URL_ID, categoryDTO.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(om.writeValueAsBytes(categoryDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -242,12 +257,15 @@ class CategoryResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         category.setId(longCount.incrementAndGet());
 
+        // Create the Category
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCategoryMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(category))
+                    .content(om.writeValueAsBytes(categoryDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -261,9 +279,12 @@ class CategoryResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         category.setId(longCount.incrementAndGet());
 
+        // Create the Category
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCategoryMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(category)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(categoryDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Category in the database
@@ -332,12 +353,15 @@ class CategoryResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         category.setId(longCount.incrementAndGet());
 
+        // Create the Category
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCategoryMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, category.getId())
+                patch(ENTITY_API_URL_ID, categoryDTO.getId())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(category))
+                    .content(om.writeValueAsBytes(categoryDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -351,12 +375,15 @@ class CategoryResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         category.setId(longCount.incrementAndGet());
 
+        // Create the Category
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCategoryMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(category))
+                    .content(om.writeValueAsBytes(categoryDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -370,9 +397,12 @@ class CategoryResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         category.setId(longCount.incrementAndGet());
 
+        // Create the Category
+        CategoryDTO categoryDTO = categoryMapper.toDto(category);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCategoryMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(category)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(categoryDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Category in the database

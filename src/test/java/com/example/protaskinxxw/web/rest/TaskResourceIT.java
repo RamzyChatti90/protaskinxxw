@@ -12,6 +12,8 @@ import com.example.protaskinxxw.domain.Task;
 import com.example.protaskinxxw.domain.enumeration.Priority;
 import com.example.protaskinxxw.domain.enumeration.Status;
 import com.example.protaskinxxw.repository.TaskRepository;
+import com.example.protaskinxxw.service.dto.TaskDTO;
+import com.example.protaskinxxw.service.mapper.TaskMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
@@ -67,6 +69,9 @@ class TaskResourceIT {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskMapper taskMapper;
 
     @Autowired
     private EntityManager em;
@@ -128,18 +133,20 @@ class TaskResourceIT {
     void createTask() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Task
-        var returnedTask = om.readValue(
+        TaskDTO taskDTO = taskMapper.toDto(task);
+        var returnedTaskDTO = om.readValue(
             restTaskMockMvc
-                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(task)))
+                .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(taskDTO)))
                 .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString(),
-            Task.class
+            TaskDTO.class
         );
 
         // Validate the Task in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+        var returnedTask = taskMapper.toEntity(returnedTaskDTO);
         assertTaskUpdatableFieldsEquals(returnedTask, getPersistedTask(returnedTask));
 
         insertedTask = returnedTask;
@@ -150,12 +157,13 @@ class TaskResourceIT {
     void createTaskWithExistingId() throws Exception {
         // Create the Task with an existing ID
         task.setId(1L);
+        TaskDTO taskDTO = taskMapper.toDto(task);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restTaskMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(task)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(taskDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Task in the database
@@ -170,9 +178,10 @@ class TaskResourceIT {
         task.setTitle(null);
 
         // Create the Task, which fails.
+        TaskDTO taskDTO = taskMapper.toDto(task);
 
         restTaskMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(task)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(taskDTO)))
             .andExpect(status().isBadRequest());
 
         assertSameRepositoryCount(databaseSizeBeforeTest);
@@ -244,13 +253,10 @@ class TaskResourceIT {
             .status(UPDATED_STATUS)
             .dueDate(UPDATED_DUE_DATE)
             .createdAt(UPDATED_CREATED_AT);
+        TaskDTO taskDTO = taskMapper.toDto(updatedTask);
 
         restTaskMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, updatedTask.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedTask))
-            )
+            .perform(put(ENTITY_API_URL_ID, taskDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(taskDTO)))
             .andExpect(status().isOk());
 
         // Validate the Task in the database
@@ -264,9 +270,12 @@ class TaskResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         task.setId(longCount.incrementAndGet());
 
+        // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTaskMockMvc
-            .perform(put(ENTITY_API_URL_ID, task.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(task)))
+            .perform(put(ENTITY_API_URL_ID, taskDTO.getId()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(taskDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Task in the database
@@ -279,12 +288,15 @@ class TaskResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         task.setId(longCount.incrementAndGet());
 
+        // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restTaskMockMvc
             .perform(
                 put(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(task))
+                    .content(om.writeValueAsBytes(taskDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -298,9 +310,12 @@ class TaskResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         task.setId(longCount.incrementAndGet());
 
+        // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restTaskMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(task)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(taskDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Task in the database
@@ -380,9 +395,14 @@ class TaskResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         task.setId(longCount.incrementAndGet());
 
+        // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTaskMockMvc
-            .perform(patch(ENTITY_API_URL_ID, task.getId()).contentType("application/merge-patch+json").content(om.writeValueAsBytes(task)))
+            .perform(
+                patch(ENTITY_API_URL_ID, taskDTO.getId()).contentType("application/merge-patch+json").content(om.writeValueAsBytes(taskDTO))
+            )
             .andExpect(status().isBadRequest());
 
         // Validate the Task in the database
@@ -395,12 +415,15 @@ class TaskResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         task.setId(longCount.incrementAndGet());
 
+        // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restTaskMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
                     .contentType("application/merge-patch+json")
-                    .content(om.writeValueAsBytes(task))
+                    .content(om.writeValueAsBytes(taskDTO))
             )
             .andExpect(status().isBadRequest());
 
@@ -414,9 +437,12 @@ class TaskResourceIT {
         long databaseSizeBeforeUpdate = getRepositoryCount();
         task.setId(longCount.incrementAndGet());
 
+        // Create the Task
+        TaskDTO taskDTO = taskMapper.toDto(task);
+
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restTaskMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(task)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(om.writeValueAsBytes(taskDTO)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Task in the database
