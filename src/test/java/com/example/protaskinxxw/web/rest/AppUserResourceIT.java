@@ -41,11 +41,14 @@ class AppUserResourceIT {
     private static final String DEFAULT_LAST_NAME = "Xgwhh";
     private static final String UPDATED_LAST_NAME = "Qxixdky";
 
-    private static final String DEFAULT_PHONE = "4651";
-    private static final String UPDATED_PHONE = "3 7";
+    private static final String DEFAULT_AVATAR_URL = "http:F[O)";
+    private static final String UPDATED_AVATAR_URL = "http:<{_";
 
-    private static final String DEFAULT_AVATAR_URL = "http:jU<z&";
-    private static final String UPDATED_AVATAR_URL = "https: a";
+    private static final String DEFAULT_BIO = "AAAAAAAAAA";
+    private static final String UPDATED_BIO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PHONE = "863 0";
+    private static final String UPDATED_PHONE = "+07";
 
     private static final String ENTITY_API_URL = "/api/app-users";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -82,7 +85,12 @@ class AppUserResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AppUser createEntity() {
-        return new AppUser().firstName(DEFAULT_FIRST_NAME).lastName(DEFAULT_LAST_NAME).phone(DEFAULT_PHONE).avatarUrl(DEFAULT_AVATAR_URL);
+        return new AppUser()
+            .firstName(DEFAULT_FIRST_NAME)
+            .lastName(DEFAULT_LAST_NAME)
+            .avatarUrl(DEFAULT_AVATAR_URL)
+            .bio(DEFAULT_BIO)
+            .phone(DEFAULT_PHONE);
     }
 
     /**
@@ -92,7 +100,12 @@ class AppUserResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AppUser createUpdatedEntity() {
-        return new AppUser().firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME).phone(UPDATED_PHONE).avatarUrl(UPDATED_AVATAR_URL);
+        return new AppUser()
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .avatarUrl(UPDATED_AVATAR_URL)
+            .bio(UPDATED_BIO)
+            .phone(UPDATED_PHONE);
     }
 
     @BeforeEach
@@ -198,8 +211,9 @@ class AppUserResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(appUser.getId().intValue())))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
-            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
-            .andExpect(jsonPath("$.[*].avatarUrl").value(hasItem(DEFAULT_AVATAR_URL)));
+            .andExpect(jsonPath("$.[*].avatarUrl").value(hasItem(DEFAULT_AVATAR_URL)))
+            .andExpect(jsonPath("$.[*].bio").value(hasItem(DEFAULT_BIO)))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)));
     }
 
     @Test
@@ -216,8 +230,9 @@ class AppUserResourceIT {
             .andExpect(jsonPath("$.id").value(appUser.getId().intValue()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
-            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
-            .andExpect(jsonPath("$.avatarUrl").value(DEFAULT_AVATAR_URL));
+            .andExpect(jsonPath("$.avatarUrl").value(DEFAULT_AVATAR_URL))
+            .andExpect(jsonPath("$.bio").value(DEFAULT_BIO))
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE));
     }
 
     @Test
@@ -239,7 +254,12 @@ class AppUserResourceIT {
         AppUser updatedAppUser = appUserRepository.findById(appUser.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedAppUser are not directly saved in db
         em.detach(updatedAppUser);
-        updatedAppUser.firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME).phone(UPDATED_PHONE).avatarUrl(UPDATED_AVATAR_URL);
+        updatedAppUser
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .avatarUrl(UPDATED_AVATAR_URL)
+            .bio(UPDATED_BIO)
+            .phone(UPDATED_PHONE);
         AppUserDTO appUserDTO = appUserMapper.toDto(updatedAppUser);
 
         restAppUserMockMvc
@@ -325,7 +345,7 @@ class AppUserResourceIT {
         AppUser partialUpdatedAppUser = new AppUser();
         partialUpdatedAppUser.setId(appUser.getId());
 
-        partialUpdatedAppUser.lastName(UPDATED_LAST_NAME).phone(UPDATED_PHONE).avatarUrl(UPDATED_AVATAR_URL);
+        partialUpdatedAppUser.lastName(UPDATED_LAST_NAME).avatarUrl(UPDATED_AVATAR_URL).bio(UPDATED_BIO).phone(UPDATED_PHONE);
 
         restAppUserMockMvc
             .perform(
@@ -353,7 +373,12 @@ class AppUserResourceIT {
         AppUser partialUpdatedAppUser = new AppUser();
         partialUpdatedAppUser.setId(appUser.getId());
 
-        partialUpdatedAppUser.firstName(UPDATED_FIRST_NAME).lastName(UPDATED_LAST_NAME).phone(UPDATED_PHONE).avatarUrl(UPDATED_AVATAR_URL);
+        partialUpdatedAppUser
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .avatarUrl(UPDATED_AVATAR_URL)
+            .bio(UPDATED_BIO)
+            .phone(UPDATED_PHONE);
 
         restAppUserMockMvc
             .perform(

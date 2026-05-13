@@ -28,7 +28,6 @@ describe('Task Form Service', () => {
             createdAt: expect.any(Object),
             category: expect.any(Object),
             owner: expect.any(Object),
-            appUser: expect.any(Object),
           }),
         );
       });
@@ -47,7 +46,6 @@ describe('Task Form Service', () => {
             createdAt: expect.any(Object),
             category: expect.any(Object),
             owner: expect.any(Object),
-            appUser: expect.any(Object),
           }),
         );
       });

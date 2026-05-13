@@ -94,12 +94,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="appUser.id">
-              <div class="d-flex">
-                <span jhiTranslate="protaskinxxwApp.task.appUser">App User</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -130,13 +124,6 @@
                 @if (task.owner) {
                   <div>
                     <a [routerLink]="['/app-user', task.owner.id, 'view']">{{ task.owner.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (task.appUser) {
-                  <div>
-                    <a [routerLink]="['/app-user', task.appUser.id, 'view']">{{ task.appUser.id }}</a>
                   </div>
                 }
               </td>

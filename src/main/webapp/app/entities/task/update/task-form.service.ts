@@ -39,7 +39,6 @@ type TaskFormGroupContent = {
   createdAt: FormControl<TaskFormRawValue['createdAt']>;
   category: FormControl<TaskFormRawValue['category']>;
   owner: FormControl<TaskFormRawValue['owner']>;
-  appUser: FormControl<TaskFormRawValue['appUser']>;
 };
 
 export type TaskFormGroup = FormGroup<TaskFormGroupContent>;
@@ -69,7 +68,6 @@ export class TaskFormService {
       createdAt: new FormControl(taskRawValue.createdAt),
       category: new FormControl(taskRawValue.category),
       owner: new FormControl(taskRawValue.owner),
-      appUser: new FormControl(taskRawValue.appUser),
     });
   }
 

@@ -14,7 +14,6 @@ export interface ITask {
   createdAt?: dayjs.Dayjs | null;
   category?: Pick<ICategory, 'id'> | null;
   owner?: Pick<IAppUser, 'id'> | null;
-  appUser?: Pick<IAppUser, 'id'> | null;
 }
 
 export type NewTask = Omit<ITask, 'id'> & { id: null };

@@ -23,12 +23,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="app_user"
                                  />
-
-        <addForeignKeyConstraint baseColumnNames="app_user_id"
-                                 baseTableName="task"
-                                 constraintName="fk_task__app_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="app_user"
-                                 />
     </changeSet>
 </databaseChangeLog>

@@ -77,12 +77,10 @@ describe('Task Management Update Component', () => {
       const task: ITask = { id: 22244 };
       const owner: IAppUser = { id: 14418 };
       task.owner = owner;
-      const appUser: IAppUser = { id: 14418 };
-      task.appUser = appUser;
 
       const appUserCollection: IAppUser[] = [{ id: 14418 }];
       jest.spyOn(appUserService, 'query').mockReturnValue(of(new HttpResponse({ body: appUserCollection })));
-      const additionalAppUsers = [owner, appUser];
+      const additionalAppUsers = [owner];
       const expectedCollection: IAppUser[] = [...additionalAppUsers, ...appUserCollection];
       jest.spyOn(appUserService, 'addAppUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -103,15 +101,12 @@ describe('Task Management Update Component', () => {
       task.category = category;
       const owner: IAppUser = { id: 14418 };
       task.owner = owner;
-      const appUser: IAppUser = { id: 14418 };
-      task.appUser = appUser;
 
       activatedRoute.data = of({ task });
       comp.ngOnInit();
 
       expect(comp.categoriesSharedCollection).toContainEqual(category);
       expect(comp.appUsersSharedCollection).toContainEqual(owner);
-      expect(comp.appUsersSharedCollection).toContainEqual(appUser);
       expect(comp.task).toEqual(task);
     });
   });

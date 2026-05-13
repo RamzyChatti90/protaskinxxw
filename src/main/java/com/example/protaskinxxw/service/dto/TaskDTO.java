@@ -34,7 +34,7 @@ public class TaskDTO implements Serializable {
 
     private CategoryDTO category;
 
-    private AppUserDTO assignedTo;
+    private AppUserDTO owner;
 
     public Long getId() {
         return id;
@@ -100,12 +100,12 @@ public class TaskDTO implements Serializable {
         this.category = category;
     }
 
-    public AppUserDTO getAssignedTo() {
-        return assignedTo;
+    public AppUserDTO getOwner() {
+        return owner;
     }
 
-    public void setAssignedTo(AppUserDTO assignedTo) {
-        this.assignedTo = assignedTo;
+    public void setOwner(AppUserDTO owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -141,7 +141,7 @@ public class TaskDTO implements Serializable {
             ", dueDate='" + getDueDate() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", category=" + getCategory() +
-            ", assignedTo=" + getAssignedTo() +
+            ", owner=" + getOwner() +
             "}";
     }
 }

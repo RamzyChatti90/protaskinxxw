@@ -23,8 +23,7 @@
       "avatarUrl": "Avatar Url",
       "bio": "Bio",
       "phone": "Phone",
-      "internalUser": "Internal User",
-      "tasks": "Tasks"
+      "internalUser": "Internal User"
     }
   }
 }

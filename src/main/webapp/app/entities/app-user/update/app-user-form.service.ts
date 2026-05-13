@@ -44,15 +44,17 @@ export class AppUserFormService {
         },
       ),
       firstName: new FormControl(appUserRawValue.firstName, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern('^[A-Z][a-z]+$')],
       }),
       lastName: new FormControl(appUserRawValue.lastName, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern('^[A-Z][a-z]+$')],
       }),
       avatarUrl: new FormControl(appUserRawValue.avatarUrl, {
         validators: [Validators.pattern('^https?:.+$')],
       }),
-      bio: new FormControl(appUserRawValue.bio),
+      bio: new FormControl(appUserRawValue.bio, {
+        validators: [Validators.maxLength(2000)],
+      }),
       phone: new FormControl(appUserRawValue.phone, {
         validators: [Validators.pattern('^\\+?[0-9 ]+$')],
       }),

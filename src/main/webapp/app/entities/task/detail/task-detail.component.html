@@ -59,14 +59,6 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="protaskinxxwApp.task.appUser">App User</span></dt>
-          <dd>
-            @if (task()!.appUser) {
-              <div>
-                <a [routerLink]="['/app-user', task()!.appUser?.id, 'view']">{{ taskRef.appUser?.id }}</a>
-              </div>
-            }
-          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
