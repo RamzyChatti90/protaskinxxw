@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20260513072921"
+  },
+  "applications": ["protaskinxxw"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRulesPattern": "^[A-Z][a-z]+$"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "pattern"],
+      "fieldValidateRulesPattern": "^[A-Z][a-z]+$"
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^\\+?[0-9 ]+$"
+    },
+    {
+      "fieldName": "avatarUrl",
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^https?:.+$"
+    },
+    {
+      "fieldName": "bio",
+      "fieldType": "TextBlob"
+    }
+  ],
+  "name": "AppUser",
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "relationshipName": "internalUser",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
