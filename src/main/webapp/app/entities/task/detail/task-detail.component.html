@@ -43,11 +43,27 @@
           <dd>
             <span>{{ taskRef.createdAt | formatMediumDatetime }}</span>
           </dd>
-          <dt><span jhiTranslate="protaskinxxwApp.task.owner">Owner</span></dt>
+          <dt><span jhiTranslate="protaskinxxwApp.task.category">Category</span></dt>
           <dd>
-            @if (task()!.owner) {
+            @if (task()!.category) {
               <div>
-                <a [routerLink]="['/app-user', task()!.owner?.id, 'view']">{{ taskRef.owner?.id }}</a>
+                <a [routerLink]="['/category', task()!.category?.id, 'view']">{{ taskRef.category?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="protaskinxxwApp.task.assignedTo">Assigned To</span></dt>
+          <dd>
+            @if (task()!.assignedTo) {
+              <div>
+                <a [routerLink]="['/app-user', task()!.assignedTo?.id, 'view']">{{ taskRef.assignedTo?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="protaskinxxwApp.task.createdBy">Created By</span></dt>
+          <dd>
+            @if (task()!.createdBy) {
+              <div>
+                <a [routerLink]="['/app-user', task()!.createdBy?.id, 'view']">{{ taskRef.createdBy?.id }}</a>
               </div>
             }
           </dd>

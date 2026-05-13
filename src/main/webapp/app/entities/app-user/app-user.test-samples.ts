@@ -11,7 +11,7 @@ export const sampleWithPartialData: IAppUser = {
   firstName: 'Rizywdt',
   lastName: 'Rabxhkr',
   phone: '+ 55',
-  bio: '../fake-data/blob/hipster.txt',
+  avatarUrl: 'https:#iq.!',
 };
 
 export const sampleWithFullData: IAppUser = {
@@ -19,8 +19,8 @@ export const sampleWithFullData: IAppUser = {
   firstName: 'Dquofe',
   lastName: 'Ktlm',
   phone: '4 0',
-  avatarUrl: 'http:SzkI',
   bio: '../fake-data/blob/hipster.txt',
+  avatarUrl: 'http:SzkI',
 };
 
 export const sampleWithNewData: NewAppUser = {

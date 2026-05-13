@@ -24,14 +24,14 @@
       "fieldValidateRulesPattern": "^\\+?[0-9 ]+$"
     },
     {
+      "fieldName": "bio",
+      "fieldType": "TextBlob"
+    },
+    {
       "fieldName": "avatarUrl",
       "fieldType": "String",
       "fieldValidateRules": ["pattern"],
       "fieldValidateRulesPattern": "^https?:.+$"
-    },
-    {
-      "fieldName": "bio",
-      "fieldType": "TextBlob"
     }
   ],
   "name": "AppUser",

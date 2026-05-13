@@ -20,7 +20,9 @@
     },
     {
       "fieldName": "icon",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "^fa-.+$"
     }
   ],
   "name": "Category",

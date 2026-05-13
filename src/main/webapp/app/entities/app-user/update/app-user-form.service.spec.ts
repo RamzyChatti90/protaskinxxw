@@ -23,8 +23,8 @@ describe('AppUser Form Service', () => {
             firstName: expect.any(Object),
             lastName: expect.any(Object),
             phone: expect.any(Object),
-            avatarUrl: expect.any(Object),
             bio: expect.any(Object),
+            avatarUrl: expect.any(Object),
             internalUser: expect.any(Object),
           }),
         );
@@ -39,8 +39,8 @@ describe('AppUser Form Service', () => {
             firstName: expect.any(Object),
             lastName: expect.any(Object),
             phone: expect.any(Object),
-            avatarUrl: expect.any(Object),
             bio: expect.any(Object),
+            avatarUrl: expect.any(Object),
             internalUser: expect.any(Object),
           }),
         );

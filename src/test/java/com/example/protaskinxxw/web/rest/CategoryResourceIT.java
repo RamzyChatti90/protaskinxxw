@@ -40,8 +40,8 @@ class CategoryResourceIT {
     private static final String DEFAULT_COLOR = "#b1CCF5";
     private static final String UPDATED_COLOR = "#67ea1D";
 
-    private static final String DEFAULT_ICON = "AAAAAAAAAA";
-    private static final String UPDATED_ICON = "BBBBBBBBBB";
+    private static final String DEFAULT_ICON = "fa-M@";
+    private static final String UPDATED_ICON = "fa-nh'Tu";
 
     private static final String ENTITY_API_URL = "/api/categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -303,7 +303,7 @@ class CategoryResourceIT {
         Category partialUpdatedCategory = new Category();
         partialUpdatedCategory.setId(category.getId());
 
-        partialUpdatedCategory.name(UPDATED_NAME).color(UPDATED_COLOR).icon(UPDATED_ICON);
+        partialUpdatedCategory.name(UPDATED_NAME).icon(UPDATED_ICON);
 
         restCategoryMockMvc
             .perform(

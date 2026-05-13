@@ -66,6 +66,11 @@
           }
         </div>
 
+        <div class="mb-3">
+          <label class="form-label" for="field_bio" jhiTranslate="protaskinxxwApp.appUser.bio">Bio</label>
+          <textarea class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio"></textarea>
+        </div>
+
         @let avatarUrlRef = editForm.get('avatarUrl')!;
         <div class="mb-3">
           <label class="form-label" for="field_avatarUrl" jhiTranslate="protaskinxxwApp.appUser.avatarUrl">Avatar Url</label>
@@ -79,11 +84,6 @@
               }
             </div>
           }
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_bio" jhiTranslate="protaskinxxwApp.appUser.bio">Bio</label>
-          <textarea class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio"></textarea>
         </div>
 
         <div class="mb-3">

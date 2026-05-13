@@ -24,7 +24,9 @@
       "status": "Status",
       "dueDate": "Due Date",
       "createdAt": "Created At",
-      "owner": "Owner"
+      "category": "Category",
+      "assignedTo": "Assigned To",
+      "createdBy": "Created By"
     }
   }
 }

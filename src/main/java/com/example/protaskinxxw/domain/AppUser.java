@@ -37,13 +37,13 @@ public class AppUser implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Pattern(regexp = "^https?:.+$")
-    @Column(name = "avatar_url")
-    private String avatarUrl;
-
     @Lob
     @Column(name = "bio")
     private String bio;
+
+    @Pattern(regexp = "^https?:.+$")
+    @Column(name = "avatar_url")
+    private String avatarUrl;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
@@ -103,19 +103,6 @@ public class AppUser implements Serializable {
         this.phone = phone;
     }
 
-    public String getAvatarUrl() {
-        return this.avatarUrl;
-    }
-
-    public AppUser avatarUrl(String avatarUrl) {
-        this.setAvatarUrl(avatarUrl);
-        return this;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
     public String getBio() {
         return this.bio;
     }
@@ -127,6 +114,19 @@ public class AppUser implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getAvatarUrl() {
+        return this.avatarUrl;
+    }
+
+    public AppUser avatarUrl(String avatarUrl) {
+        this.setAvatarUrl(avatarUrl);
+        return this;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public User getInternalUser() {
@@ -169,8 +169,8 @@ public class AppUser implements Serializable {
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", phone='" + getPhone() + "'" +
-            ", avatarUrl='" + getAvatarUrl() + "'" +
             ", bio='" + getBio() + "'" +
+            ", avatarUrl='" + getAvatarUrl() + "'" +
             "}";
     }
 }

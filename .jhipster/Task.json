@@ -39,8 +39,20 @@
   "pagination": "pagination",
   "relationships": [
     {
+      "otherEntityName": "category",
+      "relationshipName": "category",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "appUser",
-      "relationshipName": "owner",
+      "relationshipName": "assignedTo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "appUser",
+      "relationshipName": "createdBy",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }
