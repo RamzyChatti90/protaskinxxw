@@ -13,11 +13,9 @@ application {
   }
 }
 
+entity Task { title String required, description TextBlob, priority Priority, status Status, dueDate LocalDate, createdAt Instant }
+entity Category { name String required, color String, icon String }
+entity Comment { content TextBlob required, author String, createdAt Instant }
 enum Priority { LOW, MEDIUM, HIGH, URGENT }
 enum Status { TODO, IN_PROGRESS, DONE, BLOCKED }
-entity Task {   title String required,   description TextBlob,   priority Priority,   status Status,   dueDate LocalDate,   createdAt Instant }
-entity Category {   name String required,   color String,   icon String }
-entity Comment {   content TextBlob required,   author String,   createdAt Instant }
-entity Notification {   message TextBlob,   type NotifType,   read Boolean,   createdAt Instant }
-enum NotifType {   INFO,   WARNING,   ERROR }
-relationship ManyToOne {   Task{category}
+relationship ManyToOne { Task{category}
