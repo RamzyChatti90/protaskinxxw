@@ -1,6 +1,5 @@
 package com.example.service.dto;
 
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,15 +13,17 @@ public class AppUserDTO implements Serializable {
     private Long id;
 
     @NotNull
+    @Pattern(regexp = "^[A-Z][a-z]+$")
     private String firstName;
 
     @NotNull
+    @Pattern(regexp = "^[A-Z][a-z]+$")
     private String lastName;
 
     @Pattern(regexp = "^https?:.+$")
     private String avatarUrl;
 
-    @Lob
+    @Size(max = 2000)
     private String bio;
 
     @Pattern(regexp = "^\\+?[0-9 ]+$")

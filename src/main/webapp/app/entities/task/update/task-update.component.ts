@@ -118,8 +118,7 @@ export class TaskUpdateComponent implements OnInit {
     );
     this.appUsersSharedCollection = this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(
       this.appUsersSharedCollection,
-      task.assignedTo,
-      task.createdBy,
+      task.owner,
     );
   }
 
@@ -135,11 +134,7 @@ export class TaskUpdateComponent implements OnInit {
     this.appUserService
       .query()
       .pipe(map((res: HttpResponse<IAppUser[]>) => res.body ?? []))
-      .pipe(
-        map((appUsers: IAppUser[]) =>
-          this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(appUsers, this.task?.assignedTo, this.task?.createdBy),
-        ),
-      )
+      .pipe(map((appUsers: IAppUser[]) => this.appUserService.addAppUserToCollectionIfMissing<IAppUser>(appUsers, this.task?.owner)))
       .subscribe((appUsers: IAppUser[]) => (this.appUsersSharedCollection = appUsers));
   }
 }

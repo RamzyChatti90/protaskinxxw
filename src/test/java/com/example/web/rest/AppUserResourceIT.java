@@ -35,20 +35,20 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class AppUserResourceIT {
 
-    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_FIRST_NAME = "Hkhjd";
+    private static final String UPDATED_FIRST_NAME = "Uj";
 
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_LAST_NAME = "Xgwhh";
+    private static final String UPDATED_LAST_NAME = "Qxixdky";
 
-    private static final String DEFAULT_AVATAR_URL = "http:H:A+";
-    private static final String UPDATED_AVATAR_URL = "https:C";
+    private static final String DEFAULT_AVATAR_URL = "http:F[O)";
+    private static final String UPDATED_AVATAR_URL = "http:<{_";
 
     private static final String DEFAULT_BIO = "AAAAAAAAAA";
     private static final String UPDATED_BIO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PHONE = "+2933";
-    private static final String UPDATED_PHONE = "+93914 ";
+    private static final String DEFAULT_PHONE = "863 0";
+    private static final String UPDATED_PHONE = "+07";
 
     private static final String ENTITY_API_URL = "/api/app-users";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -345,7 +345,7 @@ class AppUserResourceIT {
         AppUser partialUpdatedAppUser = new AppUser();
         partialUpdatedAppUser.setId(appUser.getId());
 
-        partialUpdatedAppUser.firstName(UPDATED_FIRST_NAME).avatarUrl(UPDATED_AVATAR_URL).phone(UPDATED_PHONE);
+        partialUpdatedAppUser.lastName(UPDATED_LAST_NAME).avatarUrl(UPDATED_AVATAR_URL).bio(UPDATED_BIO).phone(UPDATED_PHONE);
 
         restAppUserMockMvc
             .perform(

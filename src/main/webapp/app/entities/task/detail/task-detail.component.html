@@ -26,7 +26,7 @@
           <dt><span jhiTranslate="protaskinxxwApp.task.priority">Priority</span></dt>
           <dd>
             <span [jhiTranslate]="'protaskinxxwApp.Priority.' + (taskRef.priority ?? 'null')">{{
-              { null: '', LOW: 'LOW', MEDIUM: 'MEDIUM', HIGH: 'HIGH' }[taskRef.priority ?? 'null']
+              { null: '', LOW: 'LOW', MEDIUM: 'MEDIUM', HIGH: 'HIGH', CRITICAL: 'CRITICAL' }[taskRef.priority ?? 'null']
             }}</span>
           </dd>
           <dt><span jhiTranslate="protaskinxxwApp.task.status">Status</span></dt>
@@ -51,19 +51,11 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="protaskinxxwApp.task.assignedTo">Assigned To</span></dt>
+          <dt><span jhiTranslate="protaskinxxwApp.task.owner">Owner</span></dt>
           <dd>
-            @if (task()!.assignedTo) {
+            @if (task()!.owner) {
               <div>
-                <a [routerLink]="['/app-user', task()!.assignedTo?.id, 'view']">{{ taskRef.assignedTo?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span jhiTranslate="protaskinxxwApp.task.createdBy">Created By</span></dt>
-          <dd>
-            @if (task()!.createdBy) {
-              <div>
-                <a [routerLink]="['/app-user', task()!.createdBy?.id, 'view']">{{ taskRef.createdBy?.id }}</a>
+                <a [routerLink]="['/app-user', task()!.owner?.id, 'view']">{{ taskRef.owner?.id }}</a>
               </div>
             }
           </dd>

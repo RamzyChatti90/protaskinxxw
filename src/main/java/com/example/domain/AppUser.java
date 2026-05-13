@@ -1,11 +1,8 @@
 package com.example.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,10 +24,12 @@ public class AppUser implements Serializable {
     private Long id;
 
     @NotNull
+    @Pattern(regexp = "^[A-Z][a-z]+$")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @NotNull
+    @Pattern(regexp = "^[A-Z][a-z]+$")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
@@ -38,8 +37,8 @@ public class AppUser implements Serializable {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
-    @Lob
-    @Column(name = "bio")
+    @Size(max = 2000)
+    @Column(name = "bio", length = 2000)
     private String bio;
 
     @Pattern(regexp = "^\\+?[0-9 ]+$")
@@ -49,11 +48,6 @@ public class AppUser implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private User internalUser;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "appUser")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "category", "owner", "appUser" }, allowSetters = true)
-    private Set<Task> tasks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -145,37 +139,6 @@ public class AppUser implements Serializable {
 
     public AppUser internalUser(User user) {
         this.setInternalUser(user);
-        return this;
-    }
-
-    public Set<Task> getTasks() {
-        return this.tasks;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        if (this.tasks != null) {
-            this.tasks.forEach(i -> i.setAppUser(null));
-        }
-        if (tasks != null) {
-            tasks.forEach(i -> i.setAppUser(this));
-        }
-        this.tasks = tasks;
-    }
-
-    public AppUser tasks(Set<Task> tasks) {
-        this.setTasks(tasks);
-        return this;
-    }
-
-    public AppUser addTasks(Task task) {
-        this.tasks.add(task);
-        task.setAppUser(this);
-        return this;
-    }
-
-    public AppUser removeTasks(Task task) {
-        this.tasks.remove(task);
-        task.setAppUser(null);
         return this;
     }
 

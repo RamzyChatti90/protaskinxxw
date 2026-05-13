@@ -42,7 +42,7 @@ public class Notification implements Serializable {
     private Type type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "internalUser", "tasks" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
     private AppUser user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

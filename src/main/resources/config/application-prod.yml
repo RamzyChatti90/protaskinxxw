@@ -17,7 +17,7 @@ logging:
   level:
     ROOT: INFO
     tech.jhipster: INFO
-    com.example.protaskinxxw: INFO
+    com.example: INFO
 
 management:
   prometheus:

@@ -36,8 +36,6 @@ public class TaskDTO implements Serializable {
 
     private AppUserDTO owner;
 
-    private AppUserDTO appUser;
-
     public Long getId() {
         return id;
     }
@@ -110,14 +108,6 @@ public class TaskDTO implements Serializable {
         this.owner = owner;
     }
 
-    public AppUserDTO getAppUser() {
-        return appUser;
-    }
-
-    public void setAppUser(AppUserDTO appUser) {
-        this.appUser = appUser;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -152,7 +142,6 @@ public class TaskDTO implements Serializable {
             ", createdAt='" + getCreatedAt() + "'" +
             ", category=" + getCategory() +
             ", owner=" + getOwner() +
-            ", appUser=" + getAppUser() +
             "}";
     }
 }

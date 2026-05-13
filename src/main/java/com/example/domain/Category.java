@@ -32,6 +32,7 @@ public class Category implements Serializable {
     @Column(name = "color")
     private String color;
 
+    @Pattern(regexp = "^[a-zA-Z0-9-_]+$")
     @Column(name = "icon")
     private String icon;
 

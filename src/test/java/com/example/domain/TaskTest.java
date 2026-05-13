@@ -47,16 +47,4 @@ class TaskTest {
         task.owner(null);
         assertThat(task.getOwner()).isNull();
     }
-
-    @Test
-    void appUserTest() {
-        Task task = getTaskRandomSampleGenerator();
-        AppUser appUserBack = getAppUserRandomSampleGenerator();
-
-        task.setAppUser(appUserBack);
-        assertThat(task.getAppUser()).isEqualTo(appUserBack);
-
-        task.appUser(null);
-        assertThat(task.getAppUser()).isNull();
-    }
 }

@@ -51,7 +51,6 @@ public class CacheConfiguration {
             createCache(cm, com.example.domain.Authority.class.getName());
             createCache(cm, com.example.domain.User.class.getName() + ".authorities");
             createCache(cm, com.example.domain.AppUser.class.getName());
-            createCache(cm, com.example.domain.AppUser.class.getName() + ".tasks");
             createCache(cm, com.example.domain.Task.class.getName());
             createCache(cm, com.example.domain.Team.class.getName());
             createCache(cm, com.example.domain.Sprint.class.getName());

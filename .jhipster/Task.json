@@ -19,7 +19,7 @@
     {
       "fieldName": "priority",
       "fieldType": "Priority",
-      "fieldValues": "LOW,MEDIUM,HIGH"
+      "fieldValues": "LOW,MEDIUM,HIGH,CRITICAL"
     },
     {
       "fieldName": "status",
@@ -46,13 +46,7 @@
     },
     {
       "otherEntityName": "appUser",
-      "relationshipName": "assignedTo",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "appUser",
-      "relationshipName": "createdBy",
+      "relationshipName": "owner",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }
