@@ -14,7 +14,7 @@
     "languages": ["fr", "en"],
     "lastLiquibaseTimestamp": 1778661345000,
     "nativeLanguage": "fr",
-    "packageName": "com.example.protaskinxxw",
+    "packageName": "com.example",
     "prodDatabaseType": "postgresql",
     "serverPort": "9000"
   }

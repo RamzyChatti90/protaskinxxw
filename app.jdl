@@ -8,14 +8,55 @@ application {
     databaseType sql
     devDatabaseType h2Disk
     prodDatabaseType postgresql
-    packageName com.carnival.protaskinxxw
+    packageName com.example
     serverPort 9000
+    nativeLanguage fr
+    languages [fr, en]
   }
+  entities *
 }
 
-entity Task { title String required, description TextBlob, priority Priority, status Status, dueDate LocalDate, createdAt Instant }
-entity Category { name String required, color String, icon String }
-entity Comment { content TextBlob required, author String, createdAt Instant }
-enum Priority { LOW, MEDIUM, HIGH, URGENT }
-enum Status { TODO, IN_PROGRESS, DONE, BLOCKED }
-relationship ManyToOne { Task{category}
+entity AppUser {
+  firstName String required pattern(/^[A-Z][a-z]+$/)
+  lastName String required pattern(/^[A-Z][a-z]+$/)
+  avatarUrl String pattern(/^https?:.+$/)
+  bio String maxlength(2000)
+  phone String pattern(/^\+?[0-9 ]+$/)
+}
+
+entity Task {
+  title String required minlength(3) maxlength(100)
+  description TextBlob
+  priority Priority
+  status Status
+  dueDate LocalDate
+  createdAt Instant
+}
+
+entity Category {
+  name String required minlength(3) maxlength(100)
+  color String pattern(/^#[0-9a-fA-F]{6}$/)
+  icon String pattern(/^[a-zA-Z0-9-_]+$/)
+}
+
+enum Priority {
+  LOW, MEDIUM, HIGH
+}
+
+enum Status {
+  TODO, IN_PROGRESS, DONE
+}
+
+relationship OneToOne {
+  AppUser{internalUser} to User with builtInEntity
+}
+
+relationship ManyToOne {
+  Task{category} to Category
+  Task{assignedTo} to AppUser
+  Task{createdBy} to AppUser
+}
+
+dto * with mapstruct
+service * with serviceImpl
+paginate Task with pagination

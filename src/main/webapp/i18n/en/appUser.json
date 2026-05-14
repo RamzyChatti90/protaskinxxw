@@ -20,9 +20,9 @@
       "id": "ID",
       "firstName": "First Name",
       "lastName": "Last Name",
-      "phone": "Phone",
       "avatarUrl": "Avatar Url",
       "bio": "Bio",
+      "phone": "Phone",
       "internalUser": "Internal User"
     }
   }
